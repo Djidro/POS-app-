@@ -2,71 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>POS App - Loyverse Style</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Royal Bakes POS</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>Simple POS - Loyverse Clone</h1>
-  </header>
+  <!-- LOGIN -->
+  <div id="login" class="screen">
+    <h2>Enter PIN</h2>
+    <input type="password" id="pin" placeholder="••••" maxlength="4"/>
+    <button onclick="login()">Login</button>
+  </div>
 
-  <nav>
-    <button onclick="showTab('products')">Products</button>
-    <button onclick="showTab('cart')">Cart</button>
-    <button onclick="showTab('expenses')">Expenses</button>
-    <button onclick="showTab('shifts')">Shifts</button>
-  </nav>
-
-  <main>
-    <section id="products" class="tab">
-      <h2>Products</h2>
-      <div id="product-list"></div>
-      <hr />
-      <form id="add-product-form">
-        <input type="text" id="product-name" placeholder="Product name" required />
-        <input type="number" id="product-price" placeholder="Price" min="0" required />
-        <input type="number" id="product-stock" placeholder="Stock" min="0" required />
-        <button type="submit">Add Product</button>
-      </form>
+  <!-- APP -->
+  <div id="app" class="hidden">
+    <header>
+      <h1>Royal Bakes POS</h1>
+      <button onclick="logout()">Logout</button>
+    </header>
+    <nav class="tabs">
+      <button data-tab="products" class="active">Products</button>
+      <button data-tab="cart">Cart</button>
+      <button data-tab="stock">Stock</button>
+      <button data-tab="expenses">Expenses</button>
+      <button data-tab="shifts">Shifts</button>
+    </nav>
+    <section id="products" class="tab active">
+      <div id="product-grid"></div>
     </section>
-
-    <section id="cart" class="tab" style="display:none;">
-      <h2>Cart</h2>
+    <section id="cart" class="tab">
       <div id="cart-list"></div>
-      <button onclick="checkout('cash')">Pay with Cash</button>
-      <button onclick="checkout('momo')">Pay with MoMo</button>
-      <button onclick="clearCart()">Clear Cart</button>
-      <div id="payment-msg"></div>
+      <div class="payments">
+        <button onclick="checkout('Cash')">Pay Cash</button>
+        <button onclick="checkout('MoMo')">Pay MoMo</button>
+      </div>
     </section>
-
-    <section id="expenses" class="tab" style="display:none;">
-      <h2>Expenses</h2>
-      <form id="add-expense-form">
-        <input type="text" id="expense-name" placeholder="Expense name" required />
-        <input type="number" id="expense-price" placeholder="Amount" min="0" required />
-        <button type="submit">Add Expense</button>
+    <section id="stock" class="tab">
+      <form id="stock-form">
+        <input id="stock-name" placeholder="Name" required/>
+        <input id="stock-price" type="number" placeholder="Price" required/>
+        <input id="stock-image" type="file" accept="image/*"/>
+        <button>Add/Update</button>
       </form>
-      <div id="expense-list"></div>
+      <div id="stock-list"></div>
     </section>
-
-    <section id="shifts" class="tab" style="display:none;">
-      <h2>Shift Tracking</h2>
+    <section id="expenses" class="tab">
+      <form id="exp-form">
+        <input id="exp-name" placeholder="Expense" required/>
+        <input id="exp-amt" type="number" placeholder="Amount" required/>
+        <button>Add Expense</button>
+      </form>
+      <div id="exp-list"></div>
+    </section>
+    <section id="shifts" class="tab">
       <button onclick="openShift()">Open Shift</button>
       <button onclick="closeShift()">Close Shift</button>
-      <div id="shift-status"></div>
-      <div id="shift-summary"></div>
+      <div id="shift-reports"></div>
     </section>
-  </main>
+  </div>
 
   <script src="script.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('Service Worker Registered'))
-        .catch(console.error);
+      navigator.serviceWorker.register('service-worker.js');
     }
   </script>
 </body>
